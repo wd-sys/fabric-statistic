@@ -1,0 +1,12 @@
+{
+  "name": "比价助手",
+  "short_name": "比价助手",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0ea5e9",
+  "background_color": "#0b1220",
+  "description": "输入商品，聚合报价，选出最优价钱",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "icons": []
+}

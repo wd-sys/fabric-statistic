@@ -1,0 +1,68 @@
+:root {
+  --bg: #0b1220;
+  --card: #111827;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --primary: #0ea5e9;
+  --accent: #22d3ee;
+  --danger: #ef4444;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: radial-gradient(1200px 800px at 20% 0%, #0b1220 0%, #0f172a 60%, #0b1220 100%);
+  color: var(--text);
+}
+
+.app-header { padding: 12px 16px; border-bottom: 1px solid #1f2937; }
+.brand { font-size: 18px; font-weight: 700; color: var(--accent); }
+
+.container { max-width: 980px; margin: 24px auto; padding: 0 16px; }
+
+.card { background: #0f172a; border: 1px solid #1f2937; border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+
+.search-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+input, select, button {
+  background: #0b1220;
+  border: 1px solid #1f2937;
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+}
+input::placeholder { color: #6b7280; }
+button { background: #0b1326; cursor: pointer; }
+button:hover { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(14,165,233,0.25) inset; }
+button.danger { border-color: #7f1d1d; color: #fecaca; }
+button.danger:hover { border-color: var(--danger); }
+
+.best-offer { padding: 10px; background: #0b1326; border-radius: 8px; }
+.best-offer .price { color: #86efac; font-weight: 700; }
+
+.offers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.offer-card { border: 1px solid #1f2937; border-radius: 8px; padding: 10px; background: #0b1324; }
+.offer-head { display: flex; justify-content: space-between; align-items: center; }
+.offer-merchant { font-weight: 600; color: var(--accent); }
+.offer-meta { color: var(--muted); font-size: 12px; }
+.offer-actions { margin-top: 10px; display: flex; gap: 8px; }
+.offer-actions a { text-decoration: none; color: var(--primary); }
+
+.form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.form-grid.simple { grid-template-columns: repeat(2, 1fr); }
+.form-grid label { display: grid; gap: 6px; font-size: 13px; color: var(--muted); }
+.form-actions { grid-column: 1 / -1; display: flex; justify-content: flex-end; }
+
+.actions-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.footer { color: var(--muted); font-size: 12px; padding: 16px; text-align: center; }
+
+@media (max-width: 640px) {
+  .form-grid { grid-template-columns: 1fr; }
+}

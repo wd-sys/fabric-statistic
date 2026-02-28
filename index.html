@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>比价助手 - 找到最优价钱</title>
+  <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0ea5e9" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">🛒 比价助手</div>
+  </header>
+
+  <main class="container">
+    <section class="card" id="search-section">
+      <div class="search-row">
+        <input id="query" type="text" placeholder="输入商品名" />
+        <button id="searchBtn">搜索</button>
+      </div>
+      <div class="actions-row">
+        <input id="imageInput" type="file" accept="image/*" capture="environment" style="display:none" />
+        <button id="ocrBtn" type="button">拍照识别</button>
+      </div>
+    </section>
+
+    <section class="card" id="summary-section">
+      <div id="bestOffer" class="best-offer">暂无报价</div>
+    </section>
+
+    <section class="card" id="offers-section">
+      <div id="offers" class="offers-grid"></div>
+    </section>
+
+    <section class="card" id="manual-section">
+      <form id="offerForm" class="form-grid simple">
+        <label>
+        
+          币种
+          <select id="currency">
+            <option value="CNY">CNY ¥</option>
+            <option value="USD">USD $</option>
+            <option value="EUR">EUR €</option>
+            <option value="HKD">HKD $</option>
+          </select>
+        </label>
+        <div class="form-actions">
+          <button type="submit" id="addOfferBtn">添加报价</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card" id="actions-section">
+      <div class="actions-row">
+        <button id="loadSampleBtn">示例数据</button>
+        <button id="saveBtn">保存</button>
+        <button id="clearBtn" class="danger">清空</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>本工具为本地运行示例，支持手动录入与比价逻辑演示。可扩展对接各平台API或爬虫服务（需遵守平台规则）。</div>
+  </footer>
+
+  <script src="sources.js?v=1"></script>
+  <script src="https://unpkg.com/tesseract.js@v4.0.2/dist/tesseract.min.js"></script>
+  <script src="script.js?v=4"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(console.error);
+      });
+    }
+  </script>
+</body>
+</html>
