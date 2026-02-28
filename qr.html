@@ -51,7 +51,11 @@
 
       function defaultBaseUrl() {
         try {
-          // 指向当前站点根路径，例如 https://wd-sys.github.io/fabric-statistic/
+          const onlineRoot = 'https://wd-sys.github.io/fabric-statistic/';
+          const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname) || location.protocol === 'file:';
+          // 在本地预览时，避免生成指向 localhost 的二维码，改为线上可访问链接
+          if (isLocal) return onlineRoot;
+          // 非本地情况下，指向当前站点根路径
           return new URL('.', location.href).href;
         } catch {
           return location.href;
@@ -85,7 +89,7 @@
         link.click();
       }
 
-      // 初始：支持 ?url= 参数
+      // 初始：支持 ?url= 参数；若在本地预览则自动指向线上站点
       const initUrl = getParam('url') || defaultBaseUrl();
       generate(initUrl);
 
