@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>扫码打开 · 比价助手</title>
+  <link rel="stylesheet" href="styles.css?v=2" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <style>
+    .qr-container { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 24px; }
+    .qr-card { background: var(--card-bg, #0b1220); border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .qr-canvas { width: 280px; height: 280px; }
+    .url-row { display: flex; gap: 8px; width: 100%; max-width: 640px; }
+    .url-row input { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #e2e8f0; }
+    .btn-row { display: flex; gap: 8px; }
+    .btn { padding: 10px 14px; border: none; border-radius: 8px; background: #0ea5e9; color: white; cursor: pointer; }
+    .btn.secondary { background: #334155; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+</head>
+<body>
+  <header class="app-header"><div class="brand">📱 扫码打开 · 比价助手</div></header>
+  <main class="container">
+    <section class="card">
+      <div class="qr-container">
+        <div class="url-row">
+          <input id="targetUrl" type="text" placeholder="输入或确认要扫码打开的链接" />
+          <button id="genBtn" class="btn">生成二维码</button>
+        </div>
+        <div class="qr-card">
+          <canvas id="qrCanvas" class="qr-canvas"></canvas>
+        </div>
+        <div class="btn-row">
+          <button id="copyBtn" class="btn secondary">复制链接</button>
+          <button id="downloadBtn" class="btn secondary">下载二维码</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><div>提示：二维码默认指向本站首页，可在输入框更改。</div></footer>
+
+  <script>
+    (function() {
+      const els = {
+        input: document.getElementById('targetUrl'),
+        genBtn: document.getElementById('genBtn'),
+        canvas: document.getElementById('qrCanvas'),
+        copyBtn: document.getElementById('copyBtn'),
+        downloadBtn: document.getElementById('downloadBtn'),
+      };
+
+      function defaultBaseUrl() {
+        try {
+          // 指向当前站点根路径，例如 https://wd-sys.github.io/fabric-statistic/
+          return new URL('.', location.href).href;
+        } catch {
+          return location.href;
+        }
+      }
+
+      function getParam(name) {
+        const u = new URL(location.href);
+        return u.searchParams.get(name) || '';
+      }
+
+      async function generate(url) {
+        const target = (url || '').trim() || defaultBaseUrl();
+        els.input.value = target;
+        await QRCode.toCanvas(els.canvas, target, { width: 280, margin: 2, color: { dark: '#000000', light: '#ffffff' } });
+      }
+
+      async function copy(text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          alert('链接已复制');
+        } catch {
+          alert('复制失败，请手动复制');
+        }
+      }
+
+      function downloadCanvas(filename) {
+        const link = document.createElement('a');
+        link.download = filename || 'qr.png';
+        link.href = els.canvas.toDataURL('image/png');
+        link.click();
+      }
+
+      // 初始：支持 ?url= 参数
+      const initUrl = getParam('url') || defaultBaseUrl();
+      generate(initUrl);
+
+      els.genBtn.addEventListener('click', () => generate(els.input.value));
+      els.copyBtn.addEventListener('click', () => copy(els.input.value));
+      els.downloadBtn.addEventListener('click', () => downloadCanvas('qr.png'));
+    })();
+  </script>
+</body>
+</html>
